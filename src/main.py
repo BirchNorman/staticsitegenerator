@@ -3,23 +3,23 @@ import os
 import shutil
 from copystatic import *
 from gencontent import *
+import sys
 
 path_to_static = "./static"
-path_to_public = "./public"
+path_to_docs = "./docs"
 path_to_content = "./content"
 
 def main():
 	# TextNodeObject = TextNode("text", "link", "https://www.boot.dev")
 	# print(TextNodeObject)
-	if os.path.exists(path_to_public):
-		shutil.rmtree(path_to_public)			
+	if os.path.exists(path_to_docs):
+		shutil.rmtree(path_to_docs)			
 
 main()
-copy_static(path_to_static, path_to_public)
-generate_pages_recursive(path_to_content, "template.html", path_to_public)
+copy_static(path_to_static, path_to_docs)
 
-# generate_page("content/index.md", "template.html", "public/index.html")
-# generate_page("content/blog/glorfindel/index.md", "template.html", "public/index.html")
-# generate_page("content/blog/tom/index.md", "template.html", "public/index.html")
-# generate_page("content/blog/majesty/index.md", "template.html", "public/index.html")
-# generate_page("content/contact/index.md", "template.html", "public/index.html")
+basepath = "/"
+if len(sys.argv) > 1:
+    basepath = sys.argv[1]
+
+generate_pages_recursive(path_to_content, "template.html", path_to_docs, basepath)
